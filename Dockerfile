@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 MAINTAINER Ryan Kurte <ryankurte@gmail.com>
-LABEL Description="Docker image for Castalia and OMNeT++ Network Simulators"
+LABEL Description="Docker image for OMNeT++ Network Simulator"
 
 RUN apt-get update
 
@@ -35,17 +35,17 @@ RUN apt-get install -y \
   osgearth-data \
   libosgearth-dev
 
-# OMNeT++ 5
-RUN wget https://omnetpp.org/omnetpp/send/30-omnet-releases/2305-omnetpp-50-linux
 
-RUN tar -xf omnetpp-5.0-linux.tgz && \
-  cd omnetpp-5.0 && \
-  . setenv && \
-  ./configure WITH_TKENV=no && \
-  make && \
-  make install
+# OMNeT++ 5
+RUN mkdir -p /usr/omnetpp
+WORKDIR /usr/omnetpp
+
+COPY omnetpp-5.0-src.tgz /usr/omnetpp/
+
+RUN tar -xf omnetpp-5.0-src.tgz
 
 # Cleanup
 RUN apt-get clean && \
   rm -rf /var/lib/apt
+
 
