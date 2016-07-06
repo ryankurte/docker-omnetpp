@@ -21,7 +21,8 @@ RUN apt-get install -y \
   default-jre \
   doxygen \
   graphviz \
-  libwebkitgtk-1.0-0
+  libwebkitgtk-1.0-0 \
+  xvfb
 
 # QT4 components
 RUN apt-get install -y \
@@ -37,15 +38,30 @@ RUN apt-get install -y \
 
 
 # OMNeT++ 5
+
+# Create working directory
 RUN mkdir -p /usr/omnetpp
 WORKDIR /usr/omnetpp
 
-COPY omnetpp-5.0-src.tgz /usr/omnetpp/
+# Fetch Omnet++ source
+# (Official mirror doesn't support command line downloads...)
+#RUN wget https://drive.google.com/open?id=0B4lxSnaU1O17a1FNRHhwY0R2TVE
+COPY omnetpp-5.0-src.tgz /usr/omnetpp
+
 
 RUN tar -xf omnetpp-5.0-src.tgz
 
+# Compilation requires path to be set
+ENV PATH $PATH:/usr/omnetpp/omnetpp-5.0/bin
+
+# Configure and compile omnet++
+RUN cd omnetpp-5.0 && \
+    xvfb-run ./configure && \
+    make
+
 # Cleanup
 RUN apt-get clean && \
-  rm -rf /var/lib/apt
+  rm -rf /var/lib/apt && \
+  rm /usr/omnetpp/omnetpp-5.0-src.tgz
 
 
