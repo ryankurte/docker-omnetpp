@@ -45,9 +45,8 @@ WORKDIR /usr/omnetpp
 
 # Fetch Omnet++ source
 # (Official mirror doesn't support command line downloads...)
-#RUN wget https://drive.google.com/open?id=0B4lxSnaU1O17a1FNRHhwY0R2TVE
-COPY omnetpp-5.0-src.tgz /usr/omnetpp
-
+RUN wget https://github.com/ryankurte/docker-omnetpp/raw/master/omnetpp-5.0-src.tgz
+#COPY omnetpp-5.0-src.tgz /usr/omnetpp
 
 RUN tar -xf omnetpp-5.0-src.tgz
 
