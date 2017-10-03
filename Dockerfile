@@ -45,22 +45,22 @@ WORKDIR /usr/omnetpp
 
 # Fetch Omnet++ source
 # (Official mirror doesn't support command line downloads...)
-RUN wget https://github.com/ryankurte/docker-omnetpp/raw/master/omnetpp-5.0-src.tgz
+RUN wget https://github.com/ryankurte/docker-omnetpp/raw/master/omnetpp-5.2-src.tgz
 #COPY omnetpp-5.0-src.tgz /usr/omnetpp
 
-RUN tar -xf omnetpp-5.0-src.tgz
+RUN tar -xf omnetpp-5.2-src.tgz
 
 # Compilation requires path to be set
-ENV PATH $PATH:/usr/omnetpp/omnetpp-5.0/bin
+ENV PATH $PATH:/usr/omnetpp/omnetpp-5.2/bin
 
 # Configure and compile omnet++
-RUN cd omnetpp-5.0 && \
+RUN cd omnetpp-5.2 && \
     xvfb-run ./configure && \
     make
 
 # Cleanup
 RUN apt-get clean && \
   rm -rf /var/lib/apt && \
-  rm /usr/omnetpp/omnetpp-5.0-src.tgz
+  rm /usr/omnetpp/omnetpp-5.2-src.tgz
 
 
