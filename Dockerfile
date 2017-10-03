@@ -26,9 +26,8 @@ RUN apt-get install -y \
 
 # QT4 components
 RUN apt-get install -y \
-  qt4-qmake \
-  libqt4-dev \
-  libqt4-opengl-dev \
+  qt5-qmake \
+  qtbase5-dev \
   openscenegraph \
   libopenscenegraph-dev \
   openscenegraph-plugin-osgearth \
@@ -44,9 +43,12 @@ RUN mkdir -p /usr/omnetpp
 WORKDIR /usr/omnetpp
 
 # Fetch Omnet++ source
-# (Official mirror doesn't support command line downloads...)
-RUN wget https://github.com/ryankurte/docker-omnetpp/raw/master/omnetpp-5.2-src.tgz
-#COPY omnetpp-5.0-src.tgz /usr/omnetpp
+# (Official mirror "doesn't support" command line downloads. Fortunately, we don't care)
+RUN wget --header="Accept: text/html" \
+         --user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:21.0) Gecko/20100101 Firefox/21.0" \
+         --referer="https://omnetpp.org" \
+         --output-document=omnetpp-5.2-src.tgz \
+         https://omnetpp.org/omnetpp/send/30-omnet-releases/2317-omnetpp-5-2-linux
 
 RUN tar -xf omnetpp-5.2-src.tgz
 
