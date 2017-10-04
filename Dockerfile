@@ -19,13 +19,13 @@ RUN apt-get install -y \
   libxml2-dev \
   zlib1g-dev \
   default-jre \
-  doxygen \
   graphviz \
   libwebkitgtk-1.0-0 \
   xvfb
 
 # QT4 components
 RUN apt-get install -y \
+  qt5-default \
   qt5-qmake \
   qtbase5-dev \
   openscenegraph \
